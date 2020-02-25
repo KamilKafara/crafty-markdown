@@ -15,8 +15,8 @@ public class FileReaderService {
             String completeData = new String(bytes);
             String[] rows = completeData.split("#");
             String[] columns = rows[0].split(",");
-            for (int i = 0; i < columns.length; i++) {
-                System.out.println(columns[0]);
+            for (String column : columns) {
+                System.out.println(column);
             }
         }
         return null;

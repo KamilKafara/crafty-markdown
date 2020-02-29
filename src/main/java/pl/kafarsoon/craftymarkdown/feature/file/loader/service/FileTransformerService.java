@@ -8,7 +8,6 @@ import pl.kafarsoon.craftymarkdown.exception.handler.ErrorCode;
 import pl.kafarsoon.craftymarkdown.exception.handler.FieldInfo;
 import pl.kafarsoon.craftymarkdown.feature.file.loader.dto.FileDTO;
 
-import java.io.IOException;
 import java.util.Objects;
 
 import static pl.kafarsoon.craftymarkdown.exception.handler.ErrorsUtils.badRequestException;
@@ -16,7 +15,7 @@ import static pl.kafarsoon.craftymarkdown.exception.handler.ErrorsUtils.badReque
 @Service
 @Log4j2
 public class FileTransformerService {
-    public FileDTO convertToDTO(MultipartFile file) throws IOException {
+    public FileDTO convertToDTO(MultipartFile file) {
         Resource fileResource = file.getResource();
         String fileName = fileResource.getFilename();
         FileDTO fileDTO = new FileDTO();
@@ -30,8 +29,6 @@ public class FileTransformerService {
         }
         if (!fileDTO.getExtension().equals("txt")) {
             badRequestException("Not supported file extension. Required txt, but found :" + fileDTO.getExtension(), new FieldInfo("file extension", ErrorCode.BAD_REQUEST));
-//            notFoundException("Not found a product with this id: " + id + " .", new FieldInfo("id", ErrorCode.NOT_FOUND));
-
         }
         return fileDTO;
     }

@@ -16,7 +16,6 @@ public class FileDTO {
     private String filename;
     private String extension;
     private String contextType;
-    private String filePath;
     private long size;
     private List<String> context;
 }

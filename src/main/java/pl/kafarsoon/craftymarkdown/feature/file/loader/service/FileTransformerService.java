@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.kafarsoon.craftymarkdown.feature.file.loader.dto.FileDTO;
 
 import java.io.IOException;
+import java.util.Objects;
 
 @Service
 @Log4j2
@@ -18,9 +19,8 @@ public class FileTransformerService {
         fileDTO.setFilename(fileName);
         fileDTO.setSize(file.getSize());
         fileDTO.setContextType(file.getContentType());
-        fileDTO.setFilePath(file.getInputStream().toString());
 
-        String[] splitFilename = fileName.split("\\.");
+        String[] splitFilename = Objects.requireNonNull(fileName).split("\\.");
         if (splitFilename.length == 2) {
             fileDTO.setExtension(splitFilename[1]);
         }

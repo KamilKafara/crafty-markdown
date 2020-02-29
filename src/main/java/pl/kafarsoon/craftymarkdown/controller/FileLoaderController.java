@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.kafarsoon.craftymarkdown.feature.file.loader.service.FileReaderService;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("file")
@@ -19,7 +20,7 @@ public class FileLoaderController {
     }
 
     @PostMapping(value = "/upload", consumes = "multipart/form-data")
-    public String fileReader(MultipartFile file) throws IOException {
+    public List<String> fileReader(MultipartFile file) throws IOException {
         return fileReaderService.fileReader(file);
     }
 }

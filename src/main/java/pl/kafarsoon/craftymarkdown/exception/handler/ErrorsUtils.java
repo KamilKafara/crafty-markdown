@@ -14,7 +14,6 @@ public class ErrorsUtils {
         throw new NotFoundException(message, fieldInfo);
     }
 
-
     public static void badRequestException(String message) {
         throw new BadRequestException(message);
     }

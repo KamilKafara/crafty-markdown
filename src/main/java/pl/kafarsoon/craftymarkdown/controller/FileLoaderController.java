@@ -1,5 +1,6 @@
 package pl.kafarsoon.craftymarkdown.controller;
 
+import net.sourceforge.tess4j.TesseractException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +21,7 @@ public class FileLoaderController {
     }
 
     @PostMapping(value = "/upload", consumes = "multipart/form-data")
-    public FileDTO fileReader(MultipartFile file) throws IOException {
+    public FileDTO fileReader(MultipartFile file) throws IOException, TesseractException {
         return fileReaderService.fileReader(file);
     }
 }

@@ -21,7 +21,7 @@ public class FileTransformerService {
 
         String[] splitFilename = Objects.requireNonNull(fileName).split("\\.");
         if (splitFilename.length == 2) {
-            fileDTO.setExtension(splitFilename[1]);
+            fileDTO.setExtension(splitFilename[1].toUpperCase());
         }
         return fileDTO;
     }

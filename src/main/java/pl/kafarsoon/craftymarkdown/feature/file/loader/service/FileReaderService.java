@@ -42,7 +42,7 @@ public class FileReaderService {
         } else if (ifExtensionExist(fileDTO)) {
             ImageDTO imageDTO = new ImageDTO();
             imageDTO.setUrl(convertToFile(file).toPath().toString());
-            context = Collections.singletonList(imageConverter.getImageToText(imageDTO));
+            context = imageConverter.getImageToText(imageDTO);
         } else {
             badRequestException("Not supported file extension. Required : " + Arrays.toString(FileFormat.values()) + ". Found : " + fileDTO.getExtension(), new FieldInfo("file extension", ErrorCode.BAD_REQUEST));
         }
@@ -56,7 +56,6 @@ public class FileReaderService {
 
     public File convertToFile(MultipartFile file) throws IOException {
         File convFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
-        convFile.createNewFile();
         FileOutputStream fos = new FileOutputStream(convFile);
         fos.write(file.getBytes());
         fos.close();

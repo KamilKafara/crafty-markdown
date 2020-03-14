@@ -52,6 +52,21 @@
             <version>4.5.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.sadath42</groupId>
+            <artifactId>grammarbot-client</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20190722</version>
+        </dependency>
+
     </dependencies>
 
     <build>

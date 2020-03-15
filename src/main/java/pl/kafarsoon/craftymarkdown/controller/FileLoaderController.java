@@ -11,7 +11,7 @@ import pl.kafarsoon.craftymarkdown.feature.file.loader.service.FileReaderService
 import java.io.IOException;
 
 @RestController
-@RequestMapping("file")
+@RequestMapping("/file")
 public class FileLoaderController {
 
     private final FileReaderService fileReaderService;

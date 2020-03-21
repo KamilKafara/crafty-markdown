@@ -65,7 +65,8 @@ public class SuggestionService {
     }
 
     public void deleteSuggestionById(Long id) {
-        suggestionRepository.deleteById(id);
+        SuggestionDTO foundedSuggestion = getById(id);
+        suggestionRepository.deleteById(foundedSuggestion.getId());
     }
 
 

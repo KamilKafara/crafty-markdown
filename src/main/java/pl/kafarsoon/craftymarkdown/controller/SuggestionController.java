@@ -30,6 +30,11 @@ public class SuggestionController {
         return suggestionService.getByName(name);
     }
 
+    @PostMapping
+    public SuggestionDTO addSuggestion(@RequestBody SuggestionDTO suggestionDTO) {
+        return suggestionService.addSuggestion(suggestionDTO);
+    }
+
     @PostMapping("{id}")
     public SuggestionDTO update(@RequestBody SuggestionDTO suggestionDTO, @PathVariable("id") Long id) {
         return suggestionService.updateSuggestion(suggestionDTO, id);
@@ -39,6 +44,4 @@ public class SuggestionController {
     public void deleteById(@PathVariable("id") Long id) {
         suggestionService.deleteSuggestionById(id);
     }
-
-
 }

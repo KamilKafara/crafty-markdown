@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import pl.kafarsoon.craftymarkdown.exception.BadRequestException;
 import pl.kafarsoon.craftymarkdown.exception.NotFoundException;
 import pl.kafarsoon.craftymarkdown.feature.suggestion.dto.SuggestionDTO;
 import pl.kafarsoon.craftymarkdown.feature.suggestion.repository.Suggestion;
@@ -61,7 +62,7 @@ public class SuggestionServiceTest {
         Suggestion suggestion = new Suggestion(1L, "Faker");
         //when
         when(suggestionRepository.findById(id)).thenReturn(java.util.Optional.of(suggestion));
-        when(suggestionTransformer.convertToDTO(any(Suggestion.class))).thenReturn(suggestionDTO);
+        when(suggestionTransformer.convertToDTO(suggestion)).thenReturn(suggestionDTO);
         SuggestionDTO expectedSuggestionDTO = suggestionService.getById(id);
         //then
         verify(suggestionRepository, times(1)).findById(id);
@@ -108,10 +109,33 @@ public class SuggestionServiceTest {
     }
 
     @Test
-    public void addSuggestion() {
+    public void addSuggestion_should_return_saved_object() {
         //given
-
+        SuggestionDTO suggestionDTO = new SuggestionDTO("Faker");
+        Suggestion suggestion = new Suggestion("Faker");
         //when
+        when(suggestionTransformer.convertFromDTO(any(SuggestionDTO.class))).thenReturn(suggestion);
+        when(suggestionRepository.save(suggestion)).thenReturn(suggestion);
+        when(suggestionTransformer.convertToDTO(suggestion)).thenReturn(suggestionDTO);
+        SuggestionDTO addedSuggestion = suggestionService.addSuggestion(suggestionDTO);
+        //then
+        verify(suggestionTransformer, times(1)).convertFromDTO(suggestionDTO);
+        verify(suggestionRepository, times(1)).save(suggestion);
+        verify(suggestionTransformer, times(1)).convertToDTO(suggestion);
+        assertEquals(addedSuggestion.getId(), suggestionDTO.getId());
+        assertEquals(addedSuggestion.getName(), suggestionDTO.getName());
+    }
+
+    @Test
+    public void addSuggestion_should_throw_bad_request_exception() {
+        //given
+        SuggestionDTO suggestionDTO = new SuggestionDTO(1L, "Faker");
+        //when
+        Throwable throwable = catchThrowable(() -> suggestionService.addSuggestion(suggestionDTO));
+
+        Assertions.assertThat(throwable).isInstanceOf(BadRequestException.class);
+        Assertions.assertThat(throwable).hasMessage("Id must be null.");
+        verify(suggestionRepository, times(0)).save(any(Suggestion.class));
 
         //then
     }

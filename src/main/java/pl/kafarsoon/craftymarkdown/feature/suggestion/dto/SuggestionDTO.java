@@ -15,4 +15,8 @@ public class SuggestionDTO {
     private Long id;
     @NotNull
     private String name;
+
+    public SuggestionDTO(@NotNull String name) {
+        this.name = name;
+    }
 }

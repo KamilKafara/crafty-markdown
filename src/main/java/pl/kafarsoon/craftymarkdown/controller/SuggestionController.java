@@ -25,7 +25,7 @@ public class SuggestionController {
         return suggestionService.getById(id);
     }
 
-    @GetMapping("{name}")
+    @GetMapping("/name/{name}")
     public List<SuggestionDTO> getAllByName(@PathVariable("name") String name) {
         return suggestionService.getByName(name);
     }

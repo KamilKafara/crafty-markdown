@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
 @Getter
 @NoArgsConstructor
 public class SuggestionDTO {
-    @NotNull
     private Long id;
     @NotNull
     private String name;

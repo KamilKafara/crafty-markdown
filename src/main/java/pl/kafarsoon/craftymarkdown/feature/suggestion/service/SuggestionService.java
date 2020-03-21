@@ -44,8 +44,13 @@ public class SuggestionService {
     }
 
     public SuggestionDTO addSuggestion(@Validated SuggestionDTO suggestionDTO) {
+        if (suggestionDTO.getId() != null) {
+            badRequestException("Id must be null.", new FieldInfo("id", ErrorCode.BAD_REQUEST));
+        }
         Suggestion suggestion = suggestionTransformer.convertFromDTO(suggestionDTO);
-        return suggestionTransformer.convertToDTO(suggestionRepository.save(suggestion));
+        Suggestion newSuggestion = suggestionRepository.save(suggestion);
+
+        return suggestionTransformer.convertToDTO(newSuggestion);
     }
 
     public SuggestionDTO updateSuggestion(@Validated SuggestionDTO suggestionDTO, Long id) {

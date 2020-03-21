@@ -85,12 +85,26 @@ public class SuggestionServiceTest {
     }
 
     @Test
-    public void getByName() {
+    public void getByName_should_return_list() {
         //given
+        String name = "Faker";
+        SuggestionDTO suggestionDTO = new SuggestionDTO(1L, name);
+        Suggestion suggestion = new Suggestion(1L, name);
+        List<SuggestionDTO> expectedSuggestionList = Collections.singletonList(suggestionDTO);
+        List<Suggestion> expectedSuggestions = Collections.singletonList(suggestion);
 
         //when
+        when(suggestionRepository.findByName(name)).thenReturn(expectedSuggestions);
+        when(suggestionTransformer.convertToDTO(any(Suggestion.class))).thenReturn(expectedSuggestionList.get(0));
+        List<SuggestionDTO> suggestionDTOList = suggestionService.getByName(name);
 
         //then
+        verify(suggestionRepository, times(1)).findByName(name);
+        verify(suggestionTransformer, times(expectedSuggestionList.size())).convertToDTO(suggestion);
+
+        assertEquals(expectedSuggestionList.size(), suggestionDTOList.size());
+        assertEquals(expectedSuggestionList.get(0).getId(), suggestionDTOList.get(0).getId());
+        assertEquals(expectedSuggestionList.get(0).getName(), suggestionDTOList.get(0).getName());
     }
 
     @Test

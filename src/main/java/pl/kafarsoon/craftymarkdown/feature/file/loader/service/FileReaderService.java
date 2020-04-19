@@ -28,12 +28,12 @@ public class FileReaderService {
 
     public FileDTO fileReader(MultipartFile file) throws IOException, TesseractException {
         FileDTO fileDTO = fileTransformerService.convertToDTO(file);
-        List<String> context = new ArrayList<>();
+        List<List<String>> context = new ArrayList<>();
         if (!file.isEmpty() && fileDTO.getExtension().equals("txt")) {
             String completeData = new String(file.getBytes());
             String[] rows = completeData.split("#");
             String[] columns = rows[0].split(",");
-            Collections.addAll(context, columns);
+//            Collections.addAll(context, columns);
         } else {
             context = SetContextFromImage(file);
         }
@@ -41,7 +41,7 @@ public class FileReaderService {
         return fileDTO;
     }
 
-    private List<String> SetContextFromImage(MultipartFile file) throws IOException, TesseractException {
+    private List<List<String>> SetContextFromImage(MultipartFile file) throws IOException, TesseractException {
         ImageDTO imageDTO = new ImageDTO();
         imageDTO.setUrl(convertToFile(file).toPath().toString());
         return Collections.singletonList(imageConverter.getImageToText(imageDTO));

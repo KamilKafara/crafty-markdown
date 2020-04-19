@@ -17,5 +17,5 @@ public class FileDTO {
     private String extension;
     private String contextType;
     private long size;
-    private List<String> context;
+    private List<List<String>> context;
 }
